@@ -1,8 +1,11 @@
 clc
 clear all; 
-
+% This script produces the data points used in Fig.7. 
+% All other figures can be produced using the functions provided here
+% TODO: Upload other scripts to produce the figures in the paper
+% 
 disp('Sim Starts')
-
+addpath('GeneralMatlabFunc')  
 sim_number = 1; % Change this variable for the different parameter settings.
 
 
@@ -14,9 +17,9 @@ rateFix = 0.104 ; % rate bit per channel use
 sList = [0.1:0.1:0.9] ; % Parameter s, code searches the optimal s in the list.
 tp = 1; % pulse shape period
 dmax = 12; % maximum value of delay 
-N = 10; % Oversampling rate
-% constel = [1+1i, -1-1i] ; 
-constel = [1+1i, -1+1i, -1-1i, 1-1i] ; % Constellation
+N = 5; % Oversampling rate
+constel = [1+1i, -1-1i] ; % Constellation BPSK
+% constel = [1+1i, -1+1i, -1-1i, 1-1i] ; % Constellation QPSK
 constel = constel ./ sqrt(mean(abs(constel).^2)) ; % Power normalization
 
 % nc = n ./ L_divBranch
@@ -38,9 +41,6 @@ if(sim_number <= 6)
 elseif(sim_number <= 12 )
    SPMode = "RCUs" % Can be "RCUs", "Quasistatic"
    sim_number = sim_number - 6 ;
-else
-   SPMode = "Normal"  % Can be "RCUs", "Quasistatic"
-   sim_number = sim_number - 12 ;
 end
 
 %Depending on the figure comment/comment out of the following parts: 
@@ -296,111 +296,3 @@ save_string = [save_string,'.mat'];
 % save(save_string,'nbrOfRealizations','avg_errors_perfectDelay','avg_errors_imperfect','avg_error_perfectDelayChannel','np_vec','rho_db','N','L_divBranch')
 % toc
 disp('Simulation ends')
-
-
-% if(sim_number == 1)
-%    L_divBranch = 2 ; 
-%    rho_db = 0; 
-%    nbrOfRealizations = 1e4;
-% elseif(sim_number == 2)
-%    L_divBranch = 2 ; 
-%    rho_db = 5; 
-%    nbrOfRealizations = 2e4;
-% elseif(sim_number == 3)
-%    L_divBranch = 2 ; 
-%    rho_db = 10;
-%    nbrOfRealizations = 1e5; 
-% elseif(sim_number == 4)
-%    L_divBranch = 2 ; 
-%    rho_db = 15;
-%    nbrOfRealizations = 1e6;
-% elseif(sim_number == 5)
-%    L_divBranch = 2 ; 
-%    rho_db = 20;
-%    nbrOfRealizations = 4e6;
-% elseif(sim_number == 6)
-%    L_divBranch = 2 ; 
-%    rho_db = 25; 
-%    nbrOfRealizations = 5e6;
-% elseif(sim_number == 7)
-%    L_divBranch = 4 ; 
-%    rho_db = -4; 
-%    nbrOfRealizations = 1e4;
-% elseif(sim_number == 8)
-%    L_divBranch = 4; 
-%    rho_db = 0;
-%    nbrOfRealizations = 1e4;
-% elseif(sim_number == 9)
-%    L_divBranch = 4 ; 
-%    rho_db = 5;
-%    nbrOfRealizations = 3e5;
-% elseif(sim_number == 10)
-%    L_divBranch = 4 ; 
-%    rho_db = 8;
-%    nbrOfRealizations = 3e6;
-% elseif(sim_number == 11)
-%    L_divBranch = 4 ; 
-%    rho_db = 11; 
-%    nbrOfRealizations = 5e6;
-% elseif(sim_number == 12)
-%    L_divBranch = 4 ; 
-%    rho_db = 14; 
-%    nbrOfRealizations = 5e6;
-% elseif(sim_number == 13)
-%    L_divBranch = 8 ; 
-%    rho_db = 11;
-%    nbrOfRealizations = 1e6;
-% elseif(sim_number == 14)
-%    L_divBranch = 8 ; 
-%    rho_db = -5;
-%    nbrOfRealizations = 1e4;
-% elseif(sim_number == 15)
-%    L_divBranch = 8 ; 
-%    rho_db = -1;
-%    nbrOfRealizations = 2e4;
-% elseif(sim_number == 16)
-%    L_divBranch = 8; 
-%    rho_db = 2; 
-%    nbrOfRealizations = 3e5;
-% elseif(sim_number == 17)
-%    L_divBranch = 8; 
-%    rho_db =  4; 
-%    nbrOfRealizations = 3e6;
-% elseif(sim_number == 18)
-%    L_divBranch = 8 ; 
-%    rho_db = 5;
-%    nbrOfRealizations = 5e6;
-% elseif(sim_number == 19)
-%    L_divBranch = 12; 
-%    rho_db = -8;
-%    nbrOfRealizations = 1e3;
-% elseif(sim_number == 20)
-%    L_divBranch = 12; 
-%    rho_db = -5;
-%    nbrOfRealizations = 1e4;
-% elseif(sim_number == 21)
-%    L_divBranch = 12; 
-%    rho_db = -2; 
-%    nbrOfRealizations = 1e4;
-% elseif(sim_number == 22)
-%    L_divBranch = 12; 
-%    rho_db = 1; 
-%    nbrOfRealizations = 1e5;
-% elseif(sim_number == 23)
-%    L_divBranch = 12; 
-%    rho_db = 2;
-%    nbrOfRealizations = 4e5;
-% elseif(sim_number == 24)
-%    L_divBranch = 12; 
-%    rho_db = 3;
-%    nbrOfRealizations = 2e6;
-% elseif(sim_number == 25)
-%    L_divBranch = 12; 
-%    rho_db = 5;
-%    nbrOfRealizations = 5e6;
-% else
-%    L_divBranch = 1 ;
-%    rho_db = 10;
-%    nbrOfRealizations = 1e3 ; 
-%    SPMode = "Normal" ; % Can be "RCUs", "Quasistatic", "Normal"
-% end
